@@ -4,20 +4,20 @@ type Room = {
     doors: Door[]
 }
 
-type NaiveRoom = {
+export type NaiveRoom = {
     name: string,
     id: number
 }
 
 // A Door is a pair of rooms with an id
-export type Door = {
+type Door = {
     id: string,
     rooms: [Room, Room]
 }
 
 export type NaiveDoor = {
-    source: string,
-    target: string,
+    source: number,
+    target: number,
     id?: string
 }
 
