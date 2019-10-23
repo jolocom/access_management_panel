@@ -1,9 +1,25 @@
 import React, { useRef, useEffect } from 'react';
 import * as d3 from 'd3';
+import { NaiveDoor, NaiveRoom, NaiveGraph } from './graphLib';
+import * as demo from './demo.json';
 
 interface IProps {
     data?: number[];
 }
+
+const getLinks = (svg: d3.Selection<null, unknown, null, undefined>) => (links: NaiveDoor[]) => svg
+    .selectAll('line')
+    .data(links)
+    .enter()
+    .append('line')
+    .style('stroke', "#aaa")
+
+const getNodes = (svg: d3.Selection<null, unknown, null, undefined>) => (nodes: NaiveRoom[]) => svg
+    .selectAll('circle')
+    .data(nodes)
+    .enter()
+    .append('circle')
+    .style('fill', '#69b3a2')
 
 /* Component */
 export const D3Component = (props: IProps) => {
