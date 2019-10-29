@@ -1,11 +1,101 @@
 import React from 'react';
 import './App.css';
 import { D3Component } from './graph';
+import { NaiveGraph } from './graphLib';
+
+const demo: NaiveGraph = {
+  "nodes": [
+    {
+      "id": 1,
+      "name": "A"
+    },
+    {
+      "id": 2,
+      "name": "B"
+    },
+    {
+      "id": 3,
+      "name": "C"
+    },
+    {
+      "id": 4,
+      "name": "D"
+    },
+    {
+      "id": 5,
+      "name": "E"
+    },
+    {
+      "id": 6,
+      "name": "F"
+    },
+    {
+      "id": 7,
+      "name": "G"
+    },
+    {
+      "id": 8,
+      "name": "H"
+    },
+    {
+      "id": 9,
+      "name": "I"
+    },
+    {
+      "id": 10,
+      "name": "J"
+    }
+  ],
+  "links": [
+    {
+      "source": 1,
+      "target": 2
+    },
+    {
+      "source": 1,
+      "target": 5
+    },
+    {
+      "source": 1,
+      "target": 6
+    },
+    {
+      "source": 2,
+      "target": 3
+    },
+    {
+      "source": 2,
+      "target": 7
+    },
+    {
+      "source": 3,
+      "target": 4
+    },
+    {
+      "source": 8,
+      "target": 3
+    },
+    {
+      "source": 4,
+      "target": 5
+    },
+    {
+      "source": 4,
+      "target": 9
+    },
+    {
+      "source": 5,
+      "target": 10
+    }
+  ]
+}
+
+
 
 const App: React.FC = () => {
   return (
     <div className="App">
-        <D3Component data={[1, 2, 3]}/>
+          <D3Component data={demo}/>
     </div>
   );
 }

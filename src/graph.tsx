@@ -1,25 +1,10 @@
 import React, { useRef, useEffect } from 'react';
 import * as d3 from 'd3';
 import { NaiveDoor, NaiveRoom, NaiveGraph } from './graphLib';
-import * as demo from './demo.json';
 
 interface IProps {
-    data?: number[];
+    data?: NaiveGraph;
 }
-
-const getLinks = (svg: d3.Selection<null, unknown, null, undefined>) => (links: NaiveDoor[]) => svg
-    .selectAll('line')
-    .data(links)
-    .enter()
-    .append('line')
-    .style('stroke', "#aaa")
-
-const getNodes = (svg: d3.Selection<null, unknown, null, undefined>) => (nodes: NaiveRoom[]) => svg
-    .selectAll('circle')
-    .data(nodes)
-    .enter()
-    .append('circle')
-    .style('fill', '#69b3a2')
 
 /* Component */
 export const D3Component = (props: IProps) => {
@@ -33,20 +18,36 @@ export const D3Component = (props: IProps) => {
     useEffect(
         () => {
             if (props.data && d3Container.current) {
+                console.log(props.data)
                 const svg = d3.select(d3Container.current);
 
                 // Bind D3 data
-                const links = getLinks(svg)(demo.links)
-                const nodes = getNodes(svg)(demo.nodes)
+                const nodes = svg.append('g')
+                    .selectAll('circle')
+                    .data(props.data.nodes)
+                    .enter()
+                    .append('circle')
+                    .attr('r', 10)
+                    .attr('fill', 'red')
 
-                // Update existing D3 elements
-                // update
-                    // .attr('x', (d, i) => i * 40)
-                    // .text((d: number) => d);
+                const labels = svg.append('g')
+                    .selectAll('text')
+                    .data(props.data.nodes)
+                    .enter()
+                    .append('text')
+                    .text(node => node.name)
+                    .attr('font-size', 15)
+                    .attr('dx', 15)
+                    .attr('dy', 4)
 
-                // Remove old D3 elements
-                // update.exit()
-                    // .remove();
+                const links = svg.append('g')
+                    .selectAll('line')
+                    .data(props.data.links)
+                    .enter()
+                    .append('line')
+                    .attr('stroke-width', 1)
+                    .attr('stroke', 'blue')
+                
             }
         },
 
