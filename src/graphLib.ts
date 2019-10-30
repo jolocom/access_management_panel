@@ -1,29 +1,57 @@
 // A Room has a name
-type Room = {
-    name: string,
+export type Room = {
+    name: string
+    id: string
+}
+
+// A Door has an id
+// This type is more concerned with the credentials
+export type DoorId = {
+    id: string
+}
+
+// Link between two nodes
+export type Link = {
+    source: string
+    target: string
+}
+
+export type Door = DoorId & Link
+
+// A credential value will just be a list of doors
+export type Cred = {
+    doors: DoorId[]
+}
+
+export type FileGraph = {
+    rooms: Room[]
     doors: Door[]
 }
 
-export type NaiveRoom = {
-    name: string,
-    id: number
+// D3 node
+export type d3Node = {
+    group: number
 }
 
-// A Door is a pair of rooms with an id
-type Door = {
-    id: string,
-    rooms: [Room, Room]
+export type d3Link = Link & {
+    value: number
 }
 
-export type NaiveDoor = {
-    source: number,
-    target: number,
-    id?: string
-}
+export const getD3Graph = (file: FileGraph): Graph => ({
+    nodes: file.rooms.map(room => ({
+        ...room,
+        group: 1
+    })),
+    links: file.doors.map(door => ({
+        ...door,
+        value: 10
+    }))
+})
 
-// A Naive Graph is an object with naive door and rooms read from a file
-export type NaiveGraph = {
-    nodes: NaiveRoom[],
-    links: NaiveDoor[]
-}
+export type d3Door = d3Link & Door
+export type d3Room = d3Node & Room
 
+export type Graph = {
+    nodes: d3Room[],
+    links: d3Door[]
+}
