@@ -22,21 +22,22 @@ export const D3Component = (props: IProps) => {
     useEffect(
         () => {
             if (props.data && d3Container.current) {
-                console.log(props.data)
+                const { nodes, links } = props.data
+
                 const svg = d3.select(d3Container.current);
 
                 // Bind D3 data
-                const nodes = svg.append('g')
+                const nodeElements = svg.append('g')
                     .selectAll('circle')
-                    .data(props.data.nodes)
+                    .data(nodes)
                     .enter()
                     .append('circle')
                     .attr('r', 10)
                     .attr('fill', 'red')
 
-                const labels = svg.append('g')
+                const labelElements = svg.append('g')
                     .selectAll('text')
-                    .data(props.data.nodes)
+                    .data(nodes)
                     .enter()
                     .append('text')
                     .text(node => node.name)
@@ -44,9 +45,9 @@ export const D3Component = (props: IProps) => {
                     .attr('dx', 15)
                     .attr('dy', 4)
 
-                const links = svg.append('g')
+                const linkElements = svg.append('g')
                     .selectAll('line')
-                    .data(props.data.links)
+                    .data(links)
                     .enter()
                     .append('line')
                     .attr('stroke-width', 1)
