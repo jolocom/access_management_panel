@@ -25,6 +25,12 @@ export const D3Component = (props: IProps) => {
                 const { nodes, links } = props.data
 
                 const svg = d3.select(d3Container.current);
+                
+                const simulation = d3.forceSimulation()
+                    // make nodes repel eachother
+                    .force('charge', d3.forceManyBody().strength(-20))
+                    // attract nodes to the center of the view so they stay visible
+                    .force('center', d3.forceCenter(width / 2, height / 2))
 
                 // Bind D3 data
                 const nodeElements = svg.append('g')
