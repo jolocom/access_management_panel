@@ -1,10 +1,9 @@
 import React, { useRef, useEffect } from 'react';
 import * as d3 from 'd3';
-import { NaiveDoor, NaiveRoom, NaiveGraph } from './graphLib';
-import { forceManyBody } from 'd3';
+import { Graph } from './graphLib';
 
 interface IProps {
-    data?: NaiveGraph;
+    graph: Graph;
 }
 
 /* Component */
