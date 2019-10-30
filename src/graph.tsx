@@ -58,7 +58,20 @@ export const D3Component = (props: IProps) => {
                     .append('line')
                     .attr('stroke-width', 1)
                     .attr('stroke', 'blue')
-                
+
+                // define what happends on each tick of the simulation
+                simulation.nodes(nodes).on('tick', () => {
+                    // update the the x and y values for the node elements
+                    nodeElements
+                        .attr('cx', node => node.x)
+                        .attr('cy', node => node.y)
+
+                    // set the x and y for the labels to their nodes
+                    labelElements
+                        .attr('x', node => node.x)
+                        .attr('y', node => node.y)
+                })
+
             }
         },
 
