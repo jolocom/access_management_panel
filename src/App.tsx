@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { GraphComponent } from './g2';
+import { GraphComponent } from './graph';
 import { graph } from './demoGraph'
 
 const App: React.FC = () => {
