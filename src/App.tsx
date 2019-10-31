@@ -6,7 +6,7 @@ import { graph } from './demoGraph'
 const App: React.FC = () => {
   return (
     <div className="App">
-          <GraphComponent graph={graph}/>
+          <GraphComponent graph={graph} onLinkClicked={d => console.log(d.id)}/>
     </div>
   );
 }

@@ -47,6 +47,8 @@ export const GraphComponent = (props: IProps) => {
 
     /* The useEffect Hook is for running side effects outside of React,
        for instance inserting elements into the DOM using D3 */
+    /* D3 operates on an SVG reference which can only be gotten by rendering an
+       SVG element and selecting it's reference */
     useEffect(
         () => {
             if (d3Container.current) {
