@@ -13,7 +13,7 @@ type Graph = {
 
 interface IProps {
     graph: FileGraph;
-
+    onLinkClicked: (link: Door) => void
 }
 
 const g2d = (g: FileGraph): Graph => ({
@@ -79,7 +79,7 @@ export const GraphComponent = (props: IProps) => {
                     .attr('x2', (d: any) => d.target.x)
                     .attr('y1', (d: any) => d.source.y)
                     .attr('y2', (d: any) => d.target.y)
-                    .on('click', d => console.log(d.id))
+                    .on('click', d => props.onLinkClicked(d))
             }
         },
         /*
