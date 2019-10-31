@@ -22,6 +22,9 @@ const g2d = (g: FileGraph): Graph => ({
 })
 
 export const GraphComponent = (props: IProps) => {
+    /* The useRef Hook creates a variable that "holds on" to a value across rendering
+       passes. In this case it will hold our component's SVG DOM element. It's
+       initialized null and React will assign it later (see the return statement) */
     const d3Container = useRef<SVGSVGElement>(null);
 
     const width = 400;
@@ -36,10 +39,14 @@ export const GraphComponent = (props: IProps) => {
         .force('link', d3.forceLink(graph.links).distance(20).strength(1))
         // attract nodes to the center of the view so they stay visible
         .force('center', d3.forceCenter(width / 2, height / 2))
+        // stop the simulation from running automatically
         .stop()
 
+    // run the simulation for 300 ticks to stabalise the shape of the graph
     simulation.tick(300)
 
+    /* The useEffect Hook is for running side effects outside of React,
+       for instance inserting elements into the DOM using D3 */
     useEffect(
         () => {
             if (d3Container.current) {
@@ -75,6 +82,13 @@ export const GraphComponent = (props: IProps) => {
                     .on('click', d => console.log(d.id))
             }
         },
+        /*
+            useEffect has a dependency array (below). It's a list of dependency
+            variables for this useEffect block. The block will run after mount
+            and whenever any of these variables change. We still have to check
+            if the variables are valid, but we do not have to compare old props
+            to next props to decide whether to rerender.
+        */
         [d3Container.current]
     )
 
