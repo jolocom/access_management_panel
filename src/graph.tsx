@@ -22,10 +22,6 @@ const g2d = (g: FileGraph): Graph => ({
 })
 
 export const GraphComponent = (props: IProps) => {
-    /* The useRef Hook creates a variable that "holds on" to a value across rendering
-       passes. In this case it will hold our component's SVG DOM element. It's
-       initialized null and React will assign it later (see the return statement) */
-    const d3Container = useRef<SVGSVGElement>(null);
 
     const width = 400;
     const height = 200;
@@ -45,7 +41,25 @@ export const GraphComponent = (props: IProps) => {
     // run the simulation for 300 ticks to stabalise the shape of the graph
     simulation.tick(300)
 
-    /* The useEffect Hook is for running side effects outside of React,
+    return (<GraphRenderer graph={graph} style={{width, height}} onLinkClicked={props.onLinkClicked}/>)
+
+}
+
+const GraphRenderer = (
+    props: {
+        graph: Graph
+        style: {
+            width: number,
+            height: number
+        },
+    } & Pick<IProps, 'onLinkClicked'>
+) => {
+    /* The useRef Hook creates a variable that "holds on" to a value across rendering
+       passes. In this case it will hold our component's SVG DOM element. It's
+       initialized null and React will assign it later (see the return statement) */
+    const d3Container = useRef<SVGSVGElement>(null);
+
+/* The useEffect Hook is for running side effects outside of React,
        for instance inserting elements into the DOM using D3 */
     /* D3 operates on an SVG reference which can only be gotten by rendering an
        SVG element and selecting it's reference */
@@ -57,7 +71,7 @@ export const GraphComponent = (props: IProps) => {
                 // Bind D3 data
                 const nodeElements = svg.append('g')
                     .selectAll('circle')
-                    .data(graph.nodes)
+                    .data(props.graph.nodes)
                     .enter()
                     .append('circle')
                     .attr('r', 10)
@@ -72,7 +86,7 @@ export const GraphComponent = (props: IProps) => {
 
                 const linkElements = svg.append('g')
                     .selectAll('line')
-                    .data(graph.links)
+                    .data(props.graph.links)
                     .enter()
                     .append('line')
                     .attr('stroke-width', 2)
@@ -97,10 +111,9 @@ export const GraphComponent = (props: IProps) => {
     return (
         <svg
             className="d3-component"
-            width={width}
-            height={height}
+            width={props.style.width}
+            height={props.style.height}
             ref={d3Container}
         />
     )
 }
-
