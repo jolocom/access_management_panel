@@ -1,12 +1,12 @@
 import React from 'react';
 import './App.css';
-import { GraphComponent } from './graph';
+import { DoorSelector } from './doorSelector';
 import { graph } from './demoGraph'
 
 const App: React.FC = () => {
   return (
     <div className="App">
-          <GraphComponent graph={graph} onLinkClicked={d => console.log(d.id)}/>
+          <DoorSelector graph={graph} onSelectionFinished={console.log}/>
     </div>
   );
 }
