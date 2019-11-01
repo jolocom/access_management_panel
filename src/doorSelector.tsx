@@ -1,24 +1,38 @@
 import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
-import { GraphComponent } from './graph';
-import { FileGraph, Door } from './graphLib';
+import { GraphRenderer } from './graph';
+import { FileGraph } from './graphLib';
 
 interface IProps {
     graph: FileGraph
     onSelectionFinished: (selection: string[]) => void
 }
 
-export const DoorSelector: React.FC<IProps>= (props: IProps) => {
-    const [selection, setSelection] = useState<string[]>([])
+interface IState {
+    selection: string[]
+}
 
-    return (
+export class DoorSelector extends React.Component<IProps, IState> {
+    onFinish: (selection: string[]) => void;
+    readonly graph: FileGraph
+    
+    constructor(props: IProps) {
+        super(props);
+        this.graph = props.graph
+        this.onFinish = props.onSelectionFinished
+        this.state = { selection: [] }
+    }
+
+    render() {
+        return (
         <div>
-            <GraphComponent graph={props.graph} onLinkClicked={({id}) => setSelection(
-                selection.some(s => id === s)
-                    ? selection.filter(s => s !== id)
-                    : [...selection, id]
-            )}/>
-            <Button onClick={() => props.onSelectionFinished(selection)}>henlo</Button>
+                <GraphRenderer graph={this.graph} style={{width: 400, height: 200}} onLinkClicked={id => {
+                    if (this.state.selection.includes(id)) this.setState({ selection: this.state.selection.filter(s => s !== id) })
+                    else this.setState({ selection: [...this.state.selection, id] })
+                }}/>
+                <Button onClick={() => this.onFinish(this.state.selection)}>issue</Button>
+                <p>{this.state.selection}</p>
         </div>
-    )
+        )
+    }
 }
