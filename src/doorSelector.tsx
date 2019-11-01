@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button } from '@acpaas-ui/react-components';
 import { GraphRenderer } from './graph';
 import { FileGraph } from './graphLib';
