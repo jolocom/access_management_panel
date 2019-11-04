@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
-import ClickableGraph from './graph';
-import { Graph, Node, Link } from './graphLib'
+import { ClickableGraph, Graph, Node, Link} from './lib';
 
 interface IProps {
     graph: Graph<Node, Link & { id: string }>

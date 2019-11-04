@@ -59,7 +59,7 @@ const getPositions = <N extends Node, L extends Link>(
     return graph;
 }
 
-const ClickableGraph = <N extends Node, L extends Link>(
+export const ClickableGraph = <N extends Node, L extends Link>(
     props: IProps<N, L>
 ) => {
     /* The useRef Hook creates a variable that "holds on" to a value across rendering
@@ -133,5 +133,3 @@ const ClickableGraph = <N extends Node, L extends Link>(
         />
     )
 }
-
-export default ClickableGraph
