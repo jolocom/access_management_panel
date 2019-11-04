@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { DoorSelector } from './doorSelector';
+import { LinkSelector } from './linkSelector';
 import { graph } from './demoGraph'
 
 const style = {
@@ -11,7 +11,7 @@ const style = {
 const App: React.FC = () => {
   return (
     <div className="App">
-          <DoorSelector graph={graph} style={style} onSelectionFinished={console.log}/>
+          <LinkSelector graph={graph} style={style} onSelectionFinished={console.log}/>
     </div>
   );
 }
