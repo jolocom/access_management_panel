@@ -4,7 +4,7 @@ import { Graph, Node, Link } from './graphLib';
 
 type d3Graph<N extends Node, L extends Link> = Graph<
     N & d3.SimulationNodeDatum,
-L & d3.SimulationLinkDatum<N & d3.SimulationNodeDatum>
+    L & d3.SimulationLinkDatum<N & d3.SimulationNodeDatum>
 >
 
 interface IProps<N extends Node, L extends Link> {
@@ -31,13 +31,13 @@ const getPositions = <N extends Node, L extends Link>(
     let graph = g2d(g)
 
     const sim = d3.forceSimulation(graph.nodes)
-    // make nodes repel eachother
+        // make nodes repel eachother
         .force('charge', d3.forceManyBody().strength(-80))
-    // make links bring nodes together
+        // make links bring nodes together
         .force('link', d3.forceLink(graph.links).distance(20).strength(1))
-    // attract nodes to the center of the view so they stay visible
+        // attract nodes to the center of the view so they stay visible
         .force('center', d3.forceCenter(width / 2, height / 2))
-    // stop the simulation from running automatically
+        // stop the simulation from running automatically
         .stop()
 
     console.log('simulate')
@@ -47,7 +47,7 @@ const getPositions = <N extends Node, L extends Link>(
     return graph;
 }
 
-export const ClickableGraph = <N extends Node, L extends Link>(
+const ClickableGraph = <N extends Node, L extends Link>(
     props: IProps<N, L>
 ) => {
     /* The useRef Hook creates a variable that "holds on" to a value across rendering
@@ -113,11 +113,13 @@ export const ClickableGraph = <N extends Node, L extends Link>(
     )
 
     return (
-            <svg
-        className="d3-component"
-        width={props.style.width}
-        height={props.style.height}
-        ref={d3Container}
-            />
+        <svg
+            className="d3-component"
+            width={props.style.width}
+            height={props.style.height}
+            ref={d3Container}
+        />
     )
 }
+
+export default ClickableGraph
