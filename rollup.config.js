@@ -33,9 +33,9 @@ export default {
       include: ["node_modules/**"],
       namedExports: {
         "node_modules/react/react.js": [
-          "Children",
+          "useRef",
+          "useEffect",
           "Component",
-          "PropTypes",
           "createElement"
         ],
         "node_modules/react-dom/index.js": ["render"]
