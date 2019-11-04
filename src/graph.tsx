@@ -12,8 +12,19 @@ interface IProps<N extends Node, L extends Link> {
     onLinkClicked: (link: L) => void
     onNodeClicked: (node: N) => void
     style: {
-        width: number,
-        height: number
+        graph: {
+            width: number,
+            height: number
+        },
+        node: {
+            radius: number,
+            color: string
+        },
+        link: {
+            width: number,
+            color: string,
+            maxLen: number
+        }
     }
 }
 
@@ -25,7 +36,8 @@ const g2d = <N extends Node, L extends Link>(g: Graph<N, L>): d3Graph<N, L> => (
 const getPositions = <N extends Node, L extends Link>(
     g: Graph<N, L>,
     width: number,
-    height: number
+    height: number,
+    maxLen: number
 ): d3Graph<N, L> => {
 
     let graph = g2d(g)
@@ -34,7 +46,7 @@ const getPositions = <N extends Node, L extends Link>(
         // make nodes repel eachother
         .force('charge', d3.forceManyBody().strength(-80))
         // make links bring nodes together
-        .force('link', d3.forceLink(graph.links).distance(20).strength(1))
+        .force('link', d3.forceLink(graph.links).distance(maxLen).strength(1))
         // attract nodes to the center of the view so they stay visible
         .force('center', d3.forceCenter(width / 2, height / 2))
         // stop the simulation from running automatically
@@ -63,7 +75,7 @@ const ClickableGraph = <N extends Node, L extends Link>(
     useEffect(
         () => {
             if (!rendered.current && d3Container.current) {
-                const graph = getPositions(props.graph, props.style.width, props.style.height)
+                const graph = getPositions(props.graph, props.style.graph.width, props.style.graph.height, props.style.link.maxLen)
                 console.log('render')
                 const { nodes, links } = graph
 
@@ -75,8 +87,8 @@ const ClickableGraph = <N extends Node, L extends Link>(
                     .data(nodes)
                     .enter()
                     .append('circle')
-                    .attr('r', 10)
-                    .attr('fill', 'red')
+                    .attr('r', props.style.node.radius)
+                    .attr('fill', props.style.node.color)
                     .attr('cx', (d: any) => d.x)
                     .attr('cy', (d: any) => d.y)
                     .on('click', props.onNodeClicked)
@@ -91,8 +103,8 @@ const ClickableGraph = <N extends Node, L extends Link>(
                     .data(links)
                     .enter()
                     .append('line')
-                    .attr('stroke-width', 20)
-                    .attr('stroke', 'blue')
+                    .attr('stroke-width', props.style.link.width)
+                    .attr('stroke', props.style.link.color)
                     .attr('x1', (d: any) => d.source.x)
                     .attr('x2', (d: any) => d.target.x)
                     .attr('y1', (d: any) => d.source.y)
@@ -115,8 +127,8 @@ const ClickableGraph = <N extends Node, L extends Link>(
     return (
         <svg
             className="d3-component"
-            width={props.style.width}
-            height={props.style.height}
+            width={props.style.graph.width}
+            height={props.style.graph.height}
             ref={d3Container}
         />
     )
