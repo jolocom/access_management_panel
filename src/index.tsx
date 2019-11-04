@@ -59,7 +59,7 @@ const getPositions = <N extends Node, L extends Link>(
     return graph;
 }
 
-export const ClickableGraph = <N extends Node, L extends Link>(
+const ClickableGraph = <N extends Node, L extends Link>(
     props: IProps<N, L>
 ) => {
     /* The useRef Hook creates a variable that "holds on" to a value across rendering
@@ -126,10 +126,12 @@ export const ClickableGraph = <N extends Node, L extends Link>(
 
     return (
         <svg
-            className="d3-component"
-            width={props.style.graph.width}
-            height={props.style.graph.height}
-            ref={d3Container}
+        className="d3-component"
+        width = { props.style.graph.width }
+        height = { props.style.graph.height }
+        ref = { d3Container }
         />
     )
 }
+
+export default ClickableGraph
