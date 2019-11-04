@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useRef, useEffect } from 'react';
 import * as d3 from 'd3'
 import { Graph, Node, Link } from './graphLib';
 
@@ -52,7 +52,6 @@ const getPositions = <N extends Node, L extends Link>(
         // stop the simulation from running automatically
         .stop()
 
-    console.log('simulate')
     // run the simulation for 300 ticks to stabalise the shape of the graph
     sim.tick(100)
 
@@ -65,18 +64,18 @@ const ClickableGraph = <N extends Node, L extends Link>(
     /* The useRef Hook creates a variable that "holds on" to a value across rendering
        passes. In this case it will hold our component's SVG DOM element. It's
        initialized null and React will assign it later (see the return statement) */
-    const d3Container = React.useRef<SVGSVGElement>(null);
-    const rendered = React.useRef(false);
+    const d3Container = useRef<SVGSVGElement>(null);
+    const rendered = useRef(false);
     /* The useEffect Hook is for running side effects outside of React,
 
        for instance inserting elements into the DOM using D3 */
     /* D3 operates on an SVG reference which can only be gotten by rendering an
        SVG element and selecting it's reference */
-    React.useEffect(
+    useEffect(
         () => {
             if (!rendered.current && d3Container.current) {
                 const graph = getPositions(props.graph, props.style.graph.width, props.style.graph.height, props.style.link.maxLen)
-                console.log('render')
+
                 const { nodes, links } = graph
 
                 const svg = d3.select(d3Container.current)
@@ -135,3 +134,5 @@ const ClickableGraph = <N extends Node, L extends Link>(
 }
 
 export default ClickableGraph
+
+export {Graph, Node, Link}

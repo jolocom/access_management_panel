@@ -32,7 +32,8 @@ export default {
     commonjs({
       include: ["node_modules/**"],
       namedExports: {
-        "node_modules/react/react.js": [
+        "node_modules/react/index.js": [
+          "Children",
           "useRef",
           "useEffect",
           "Component",
