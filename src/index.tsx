@@ -1,4 +1,5 @@
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
+const { useRef, useEffect } = React
 import * as d3 from 'd3'
 import { Graph, Node, Link } from './graphLib';
 
