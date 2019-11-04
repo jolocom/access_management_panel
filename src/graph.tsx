@@ -44,7 +44,7 @@ const getPositions = <N extends Node, L extends Link>(
 
     const sim = d3.forceSimulation(graph.nodes)
         // make nodes repel eachother
-        .force('charge', d3.forceManyBody().strength(-80))
+        .force('charge', d3.forceManyBody().strength(-120))
         // make links bring nodes together
         .force('link', d3.forceLink(graph.links).distance(maxLen).strength(1))
         // attract nodes to the center of the view so they stay visible
